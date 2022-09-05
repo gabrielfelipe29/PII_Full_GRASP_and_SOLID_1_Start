@@ -33,6 +33,23 @@ namespace Full_GRASP_And_SOLID.Library
                 Console.WriteLine($"{step.Quantity} de '{step.Input.Description}' " +
                     $"usando '{step.Equipment.Description}' durante {step.Time}");
             }
+            Console.WriteLine($"Costo total= {GetProductionCost(this)}");
+        }
+
+        public double GetProductionCost(Recipe recipe)
+        {
+            /* 
+            El calculo de la produccion se hace en la receta ya que es el que tiene acceso a toda 
+            la información relevante, por lo tanto, es el expert 
+            */
+            double total = 0;
+            foreach (Step step in recipe.steps)
+            {
+                // el tiempo fue considerado como si estuviera en minutos
+                total = total + step.Input.UnitCost * step.Quantity + ((step.Time / 60) * step.Equipment.HourlyCost);
+
+            }
+            return total;
         }
     }
 }
